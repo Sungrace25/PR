@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-assisted ECG analysis for rapid and accurate diagnosis of heart failure and heart attacks.">
+    <title>AI-Assisted ECG Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/babel-standalone@7.22.10/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div id="root"></div>
+    <script type="text/babel">
+        class ErrorBoundary extends React.Component {
+            state = { hasError: false };
+            static getDerivedStateFromError(error) {
+                return { hasError: true };
+            }
+            render() {
+                if (this.state.hasError) {
+                    return (
+                        <div class="text-center py-12">
+                            <h2 class="text-2xl font-bold text-red-600">Something went wrong.</h2>
+                            <p class="mt-4 text-gray-600">Please refresh the page or contact support.</p>
+                        </div>
+                    );
+                }
+                return this.props.children;
+            }
+        }
+
+        function Header() {
+            return (
+                <header class="bg-blue-600 text-white py-6 text-center">
+                    <h1 class="text-4xl font-bold">AI-Assisted ECG Analysis</h1>
+                    <p class="mt-2 text-lg">Revolutionizing Heart Failure and Heart Attack Diagnosis</p>
+                </header>
+            );
+        }
+
+        function FeatureCard({ title, description }) {
+            return (
+                <div class="bg-white p-6 rounded-lg shadow-md" role="region" aria-label={title}>
+                    <h3 class="text-xl font-semibold text-blue-600">{title}</h3>
+                    <p class="mt-2 text-gray-600">{description}</p>
+                </div>
+            );
+        }
+
+        function AccuracyChart() {
+            React.useEffect(() => {
+                const ctx = document.getElementById('accuracyChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['AITiA LVSD', 'NT-proBNP'],
+                        datasets: [{
+                            label: 'Accuracy',
+                            data: [0.905, 0.720],
+                            backgroundColor: ['#2563eb', '#6b7280'],
+                            borderColor: ['#1e3a8a', '#4b5563'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 1,
+                                title: {
+                                    display: true,
+                                    text: 'Accuracy'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }, []);
+
+            return (
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <h3 class="text-xl font-semibold text-blue-600">Superior Diagnostic Accuracy</h3>
+                    <p class="mt-2 text-gray-600">AITiA LVSD outperforms traditional methods</p>
+                    <canvas id="accuracyChart" class="mt-4 mx-auto" width="400" height="200"></canvas>
+                </div>
+            );
+        }
+
+        function MainContent() {
+            return (
+                <div class="max-w-6xl mx-auto py-12 px-4">
+                    <section class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-800">Transforming Cardiac Care with AI</h2>
+                        <p class="mt-4 text-gray-600">
+                            Our AI-assisted ECG analysis system delivers rapid, accurate, and secure diagnosis of heart failure and heart attacks, 
+                            leveraging cutting-edge technology and a robust research foundation.
+                        </p>
+                    </section>
+                    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                        <FeatureCard 
+                            title="Fast & Accurate Diagnosis" 
+                            description="Diagnose heart failure and heart attacks in just 10 seconds with 90.5% accuracy, surpassing traditional blood tests." 
+                        />
+                        <FeatureCard 
+                            title="Seamless Integration" 
+                            description="Compatible with standard 12-lead ECG machines and integrates with EMR and PACS systems." 
+                        />
+                        <FeatureCard 
+                            title="Secureoader On-Premise Solution" 
+                            description="On-premise AI server ensures fast processing and enhanced security with no internet connection required." 
+                        />
+                    </section>
+                    <section class="mb-12">
+                        <AccuracyChart />
+                    </section>
+                    <section class="text-center">
+                        <h2 class="text-2xl font-bold text-gray-800">Backed by Research Excellence</h2>
+                        <p class="mt-4 text-gray-600">
+                            Supported by 59 peer-reviewed publications, our technology is developed by Medical AI, a global leader in AI-ECG research.
+                        </p>
+                        <a 
+                            href="https://x.ai" 
+                            class="mt-6 inline-block bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition"
+                            aria-label="Learn more about AI-assisted ECG analysis"
+                        >
+                            Learn More
+                        </a>
+                    </section>
+                </div>
+            );
+        }
+
+        function App() {
+            return (
+                <ErrorBoundary>
+                    <div>
+                        <Header />
+                        <MainContent />
+                    </div>
+                </ErrorBoundary>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
